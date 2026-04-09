@@ -9,7 +9,12 @@ const links = [
 </script>
 
 <template>
-  <UFooter :ui="{ container: 'border-t border-default lg:py-8', right: 'gap-x-0' }">
+  <UFooter
+    :ui="{
+      container: 'border-t border-default lg:py-8',
+      right: 'gap-x-0 flex-wrap'
+    }"
+  >
     <template #left>
       <p class="text-sm text-dimmed">
         Built with Nuxt UI • © {{ new Date().getFullYear() }}

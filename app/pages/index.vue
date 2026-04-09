@@ -74,7 +74,7 @@ const { copy, copied } = useClipboard()
           <HeroShaders class="absolute top-0 inset-x-0 opacity-15 h-full" />
         </Motion>
 
-        <GradientGlow class="top-0 w-[800px] h-[600px]" />
+        <GradientGlow class="top-0 w-2/3 h-1/2" />
       </template>
 
       <template #headline>
@@ -129,7 +129,7 @@ const { copy, copied } = useClipboard()
 
       <template #links>
         <Motion
-          class="flex justify-center gap-6"
+          class="flex flex-wrap justify-center gap-6"
           v-bind="enterMotion(0.65)"
         >
           <UButton
@@ -157,6 +157,7 @@ const { copy, copied } = useClipboard()
           :items="page.logos.items"
           :ui="{
             title: 'font-mono uppercase text-xs tracking-[0.12em] text-dimmed',
+            logos: 'gap-0',
             logo: 'text-muted size-6'
           }"
         />
@@ -304,7 +305,7 @@ const { copy, copied } = useClipboard()
       }"
     >
       <template #top>
-        <GradientGlow class="bottom-0 w-[600px] h-[400px]" />
+        <GradientGlow class="bottom-0 w-2/3 h-1/2" />
       </template>
 
       <template #title>
