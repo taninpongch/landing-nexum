@@ -1,11 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100..900&family=Prompt:ital,wght@0,100;0,400;0,600;1,100&display=swap');
 @import "tailwindcss";
 @import "@nuxt/ui";
 
 @source "../../../content/**/*";
 
 @theme static {
-  --font-sans: 'Instrument Sans', -apple-system, sans-serif;
-  --font-mono: 'IBM Plex Mono', monospace;
+  --font-sans: 'Prompt', 'Noto Sans Thai', -apple-system, sans-serif;
+  --font-mono: 'Prompt', 'Noto Sans Thai', monospace;
 
   --color-lime-50: #fbfde8;
   --color-lime-100: #f5fbb3;
@@ -25,10 +26,16 @@
     0% {
       background-position: 0% center;
     }
+
     100% {
       background-position: 200% center;
     }
   }
+}
+
+html,
+body {
+  font-family: var(--font-sans);
 }
 
 .dark {
@@ -39,6 +46,7 @@
   --ui-border: var(--ui-color-neutral-900);
 }
 
+/* 
 .nexum-shell {
   background:
     linear-gradient(120deg, rgb(250 252 255 / 100%) 0%, rgb(244 248 254 / 100%) 55%, rgb(240 245 253 / 100%) 100%),
@@ -77,4 +85,4 @@
   height: 84%;
   border-radius: 9999px;
   background: radial-gradient(circle, rgb(255 255 255 / 22%) 0%, rgb(255 255 255 / 0%) 66%);
-}
+} */

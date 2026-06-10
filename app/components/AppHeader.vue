@@ -1,166 +1,40 @@
-<script setup lang="ts">
-import { motion } from 'motion-v'
-import type { VariantType } from 'motion-v'
-
-const nuxtApp = useNuxtApp()
-const activeSection = ref<string>()
-
-const items = computed(() => [
-  {
-    label: 'Features',
-    to: '#features',
-    exactHash: true,
-    active: activeSection.value === 'features'
-  },
-  {
-    label: 'Metrics',
-    to: '#metrics',
-    exactHash: true,
-    active: activeSection.value === 'metrics'
-  }
-])
-
-nuxtApp.hooks.hookOnce('page:loading:end', () => {
-  const observer = new IntersectionObserver((entries) => {
-    const visible = entries.find(e => e.isIntersecting)
-    if (visible) {
-      activeSection.value = visible.target.id
-    } else if (entries.every(e => !e.isIntersecting)) {
-      activeSection.value = undefined
-    }
-  }, { rootMargin: '-50% 0px -50% 0px' })
-
-  document.querySelectorAll('#features, #metrics').forEach(el => observer.observe(el))
-})
-
-const variants: Record<string, VariantType | ((custom: unknown) => VariantType)> = {
-  normal: {
-    rotate: 0,
-    y: 0,
-    opacity: 1
-  },
-  close: (custom: unknown) => {
-    const c = custom as number
-    return {
-      rotate: c === 1 ? 45 : c === 3 ? -45 : 0,
-      y: c === 1 ? 6 : c === 3 ? -6 : 0,
-      opacity: c === 2 ? 0 : 1,
-      transition: {
-        type: 'spring',
-        stiffness: 260,
-        damping: 20
-      }
-    }
-  }
-}
-</script>
-
 <template>
-  <UHeader :ui="{ container: 'max-w-none px-0' }">
+  <UHeader :ui="headerUi" class="p-0">
     <template #left>
-      <NuxtLink to="/">
-        <AppLogo class="h-6 w-auto shrink-0" />
+      <NuxtLink to="/todsob" aria-label="Nexum Home"
+        class="relative flex min-h-8.5 items-center gap-2 overflow-hidden  px-3 pr-7 text-white no-underline">
+        <!-- <UAvatar size="xl" src="https://failfast.blob.core.windows.net/mcontent-imgs/landingnexum/Vector.png"
+          class="bg-[#f2f7fd]" /> -->
+        <img src="https://failfast.blob.core.windows.net/mcontent-imgs/landingnexum/logonexum.png" alt="Nexum Logo"
+          class="mx-auto" />
+        <!-- <span class="text-xs font-semibold tracking-[0.04em]">NEXUM</span> -->
+        <span
+          class="pointer-events-none absolute -right-3 inset-y-0 w-7 bg-[linear-gradient(120deg,transparent_0%,transparent_26%,#0b5c8d_27%,#0b5c8d_52%,transparent_53%)]" />
       </NuxtLink>
 
-      <TemplateMenu />
+      <div class="flex min-h-8.5 items-center gap-1.75 border-r border-[#1f6b96] px-3 max-md:border-r-0">
+        <!-- <span
+          class="grid size-4.75 place-content-center rounded-full bg-[#1ac276] text-[10px] font-bold text-[#ecfff5]">FD</span> -->
+        <!-- <UAvatar size="xl" src="https://failfast.blob.core.windows.net/mcontent-imgs/landingnexum/Vector.png"
+          class="bg-[#f2f7fd]" /> -->
+        <img src="https://failfast.blob.core.windows.net/mcontent-imgs/landingnexum/Vector.png" alt="Nexum Logo"
+          class="size-10" />
+        <span class="text-xl font-semibold text-white max-md:hidden">Freedom credit company</span>
+      </div>
     </template>
-
-    <UNavigationMenu
-      :items="items"
-      variant="link"
-    />
 
     <template #right>
-      <UButton
-        label="Sign in"
-        color="neutral"
-        variant="ghost"
-        class="hidden lg:flex"
-      />
-      <UButton
-        label="Get started"
-        color="neutral"
-        class="hidden lg:flex"
-        to="https://ui.nuxt.com"
-        target="_blank"
-      />
-    </template>
-
-    <template #toggle="{ open, toggle, ui }">
-      <UButton
-        size="sm"
-        variant="ghost"
-        color="neutral"
-        square
-        :aria-label="open ? 'Close navigation' : 'Open navigation'"
-        :aria-expanded="open"
-        :class="ui.toggle({ toggleSide: 'right' })"
-        @click="toggle"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="size-5"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <motion.line
-            x1="4"
-            y1="6"
-            x2="20"
-            y2="6"
-            :variants="variants"
-            :animate="open ? 'close' : 'normal'"
-            :custom="1"
-            class="outline-none"
-          />
-          <motion.line
-            x1="4"
-            y1="12"
-            x2="20"
-            y2="12"
-            :variants="variants"
-            :animate="open ? 'close' : 'normal'"
-            :custom="2"
-            class="outline-none"
-          />
-          <motion.line
-            x1="4"
-            y1="18"
-            x2="20"
-            y2="18"
-            :variants="variants"
-            :animate="open ? 'close' : 'normal'"
-            :custom="3"
-            class="outline-none"
-          />
-        </svg>
-      </UButton>
-    </template>
-
-    <template #body>
-      <UNavigationMenu
-        :items="items"
-        orientation="vertical"
-      />
-
-      <div class="mt-4 flex flex-col gap-2">
-        <UButton
-          label="Sign in"
-          color="neutral"
-          variant="soft"
-          block
-        />
-        <UButton
-          label="Get started"
-          block
-          to="https://ui.nuxt.com"
-          target="_blank"
-        />
+      <div class="flex min-h-8.5 items-center gap-2  ">
+        <span class="text-xl font-bold text-white max-md:hidden">Anon Bangsan</span>
+        <UAvatar size="xl" icon="i-lucide-user" class="bg-[#89c8b1]" :ui="{ icon: 'size-3 text-sky-900' }" />
       </div>
     </template>
   </UHeader>
 </template>
+
+<script setup lang="ts">
+const headerUi = {
+  root: 'bg-[#024A70]',
+  container: 'max-w-none min-h-9 px-0'
+}
+</script>

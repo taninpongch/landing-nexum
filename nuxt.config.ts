@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  ssr: false,
   modules: [
     '@nuxt/eslint',
     '@nuxt/content',
@@ -42,6 +43,11 @@ export default defineNuxtConfig({
         commaDangle: 'never',
         braceStyle: '1tbs'
       }
+    }
+  },
+  vite: {
+    server: {
+      allowedHosts: true
     }
   }
 })
