@@ -56,7 +56,7 @@ const variants: Record<string, VariantType | ((custom: unknown) => VariantType)>
 </script>
 
 <template>
-  <UHeader>
+  <UHeader :ui="{ container: 'max-w-none px-0' }">
     <template #left>
       <NuxtLink to="/">
         <AppLogo class="h-6 w-auto shrink-0" />
