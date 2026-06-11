@@ -1,12 +1,23 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   ssr: false,
+  runtimeConfig: {
+    // Public keys that are exposed to the client
+    public: {
+      payrollURL: process.env.NUXT_PUBLIC_URL_PAYROLL,
+      nexumURL: process.env.NUXT_PUBLIC_URL_NEXUM,
+      topupPayrollURL: process.env.NUXT_PUBLIC_URL_TOPUP_PAYROLL,
+      topupAllowanceURL: process.env.NUXT_PUBLIC_URL_TOPUP_ALLOWANCE
+    }
+  },
   modules: [
     '@nuxt/eslint',
     '@nuxt/content',
     '@nuxt/ui',
+    '@pinia/nuxt',
     '@vueuse/nuxt',
-    'motion-v/nuxt'
+    'motion-v/nuxt',
+    '@nuxtjs/google-fonts'
   ],
 
   devtools: {
@@ -14,6 +25,13 @@ export default defineNuxtConfig({
   },
 
   css: ['~/assets/css/main.css'],
+
+  // googleFonts: {
+  //   families: {
+  //     'Noto Sans Thai': true,
+  //   },
+  //   download: true,
+  // },
 
   content: {
     experimental: {

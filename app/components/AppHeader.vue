@@ -12,23 +12,23 @@
           class="pointer-events-none absolute -right-3 inset-y-0 w-7 bg-[linear-gradient(120deg,transparent_0%,transparent_26%,#0b5c8d_27%,#0b5c8d_52%,transparent_53%)]" />
       </NuxtLink>
 
-      <div class="flex min-h-8.5 items-center gap-1.75 border-r border-[#1f6b96] px-3 max-md:border-r-0">
         <!-- <span
           class="grid size-4.75 place-content-center rounded-full bg-[#1ac276] text-[10px] font-bold text-[#ecfff5]">FD</span> -->
         <!-- <UAvatar size="xl" src="https://failfast.blob.core.windows.net/mcontent-imgs/landingnexum/Vector.png"
           class="bg-[#f2f7fd]" /> -->
+      <!-- <div class="flex min-h-8.5 items-center gap-1.75 border-r border-[#1f6b96] px-3 max-md:border-r-0">
         <img src="https://failfast.blob.core.windows.net/mcontent-imgs/landingnexum/Vector.png" alt="Nexum Logo"
           class="size-10" />
         <span class="text-xl font-semibold text-white max-md:hidden">Freedom credit company</span>
-      </div>
+      </div> -->
     </template>
 
-    <template #right>
+    <!-- <template #right>
       <div class="flex min-h-8.5 items-center gap-2  ">
         <span class="text-xl font-bold text-white max-md:hidden">Anon Bangsan</span>
         <UAvatar size="xl" icon="i-lucide-user" class="bg-[#89c8b1]" :ui="{ icon: 'size-3 text-sky-900' }" />
       </div>
-    </template>
+    </template> -->
   </UHeader>
 </template>
 

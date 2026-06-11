@@ -2,17 +2,17 @@
   <section class="px-4 lg:px-4 py-8 lg:py-5">
     <section class="todsob-shell rounded-3xl p-4 sm:p-6 lg:p-8">
       <header class="mb-5 lg:mb-6">
-        <p class="text-xl text-neutral-600">สวัสดี Anon Bangsan</p>
+        <p class="text-xl text-neutral-600">ยินดีตอนรับสู่ Nexum</p>
         <h1 class="text-4xl font-semibold tracking-tight text-neutral-900">เลือกบริการที่ต้องการใช้งาน</h1>
       </header>
 
       <div class="grid gap-4 lg:grid-cols-[2fr_1fr]">
         <div class="grid gap-4 sm:grid-cols-2 ">
           <UCard v-for="service in mainServices" :key="service.title"
-            class="todsob-service-card h-full border-0 text-white " :ui="{
+            class="todsob-service-card h-full border-0 text-white cursor-pointer " :ui="{
               root: 'h-full rounded-3xl',
               body: 'p-6 lg:p-7 flex h-full flex-col'
-            }" @click="service.to && navigateTo(service.to)">
+            }" @click="openLink(service.to)">
             <UIcon :name="service.icon" class="mb-7 size-48 text-yellow-300 mt-10" />
             <h2 class="text-4xl font-bold leading-tight">{{ service.title }}</h2>
             <p class="mt-1 text-3xl text-sky-100">{{ service.description }}</p>
@@ -23,10 +23,10 @@
             </ULink>
           </UCard>
 
-          <UCard v-for="action in quickActions" :key="action.title" class="border-0 " :ui="{
+          <UCard v-for="action in quickActions" :key="action.title" class="border-0 cursor-pointer " :ui="{
             root: 'rounded-2xl bg-slate-200/80',
             body: 'p-5 flex items-center gap-4'
-          }">
+          }" @click="openLink(action.to)">
             <UAlert variant="soft" :title="action.title" :description="action.description" :icon="action.icon" :ui="{
               root: 'rounded-2xl border-0 bg-transparent p-0 items-center',
               title: 'text-3xl font-semibold text-sky-900',
@@ -36,16 +36,7 @@
               ui: {
                 leadingIcon: 'size-[50px]'
               }
-            }" close-icon="i-lucide-chevron-right"></UAlert>
-            <!-- <div class="grid size-12 place-content-center rounded-xl bg-white text-sky-700 shadow-sm">
-              <UIcon :name="action.icon" class="size-7" />
-            </div>
-            <div class="flex-1">
-              <p class="text-3xl font-semibold text-sky-900">{{ action.title }}</p>
-              <p class="text-2xl text-slate-600">{{ action.description }}</p>
-            </div>
-            <UButton variant="ghost" color="neutral" :to="action.to" icon="i-lucide-chevron-right" class="text-sky-700"
-              :ui="{ leadingIcon: 'hidden', trailingIcon: 'size-5' }" /> -->
+            }" close-icon="i-lucide-chevron-right" />
           </UCard>
         </div>
 
@@ -53,7 +44,7 @@
           <UCard class="border-0" :ui="{ root: 'rounded-2xl bg-white', body: 'p-5' }">
             <div class="mb-3 flex items-center justify-between">
               <h3 class="text-2xl font-semibold text-neutral-900">ข่าวสาร</h3>
-              <ULink to="#" class="text-xl text-sky-700 hover:text-sky-800">ดูทั้งหมด</ULink>
+              <ULink to="/news" class="text-xl text-sky-700 hover:text-sky-800">ดูทั้งหมด</ULink>
             </div>
 
             <div class="space-y-3">
@@ -61,7 +52,7 @@
                 class="border-b border-slate-100 pb-3 last:border-b-0 last:pb-0">
                 <div class="mb-1 flex items-start justify-between gap-2">
                   <h4 class="text-xl font-medium text-slate-900">{{ news.title }}</h4>
-                  <UBadge :label="news.status" :color="news.badgeColor" variant="soft"
+                  <UBadge :label="news.statusText || news.status" :color="news.badgeColor" variant="soft"
                     class="shrink-0 rounded-full text-sm" />
                 </div>
                 <p class="text-base text-slate-500">{{ news.description }}</p>
@@ -89,19 +80,25 @@
 </template>
 
 <script setup lang="ts">
-import type { icon } from '#build/ui/prose'
+
+const newsStore = useNewsStore()
+
+const config = useRuntimeConfig();
+
+const baseURL = config.public;
+
 
 const mainServices = [
   {
     title: 'จ่ายเงินเดือน',
     description: 'บริการจัดการเงินเดือน',
-    to: '#todsob',
+    to: baseURL.payrollURL,
     icon: 'i-lucide-users-round'
   },
   {
     title: 'เครดิต',
     description: 'บริการจัดการเครดิต',
-    to: '#todsob2',
+    to: baseURL.nexumURL,
     icon: 'i-lucide-wallet-cards'
   }
 ]
@@ -110,68 +107,64 @@ const quickActions = [
   {
     title: 'เติมเงินเข้าร้าน',
     description: 'เพื่อจ่ายเงินเดือน',
-    to: '#',
+    to: baseURL.topupPayrollURL,
     icon: 'i-lucide-store'
   },
   {
     title: 'เติมเงินกระเป๋าเครดิต',
-    description: 'เพิ่มวงลิมิตเครดิต',
-    to: '#',
+    description: 'เพื่อปล่อยเครดิต',
+    to: baseURL.topupAllowanceURL,
     icon: 'i-lucide-pie-chart'
   }
 ]
 
-const newsItems: any[] = [
-  {
-    title: 'Dashboard ใหม่',
-    description: 'หน้า dashboard ใหม่ ใช้งานได้แล้ว',
-    date: '31/1/2569 23:30',
-    status: 'อัพเดต',
-    badgeColor: 'success'
-  },
-  {
-    title: 'อัพเดต ระบบจัดการวงเงินพนักงาน',
-    description: 'จัดสรรวงเงินได้สะดวกขึ้น',
-    date: '31/1/2569 23:00',
-    status: 'อัพเดต',
-    badgeColor: 'success'
-  },
-  {
-    title: 'แจ้งปิดปรับปรุงระบบ วันที่ 31/12/25...',
-    description: 'ปิดปรับปรุงระบบเพื่อเพิ่มประสิทธิภาพการให้บริการ',
-    date: '31/1/2569 23:00',
-    status: 'ประกาศ',
-    badgeColor: 'warning'
-  }
-]
+const newsItems = computed(() => newsStore.data)
 
 const supportItems = [
   {
-    label: 'ติดต่อเจ้าหน้าที่ผ่าน Line OA',
+    label: 'Coming Soon',
     to: '#',
     icon: 'i-lucide-message-circle-more'
   },
   {
-    label: 'support@nexum.com',
-    to: 'mailto:support@nexum.com',
-    icon: 'i-lucide-mail'
-  },
-  {
-    label: '02-123-15789',
-    to: 'tel:0212315789',
-    icon: 'i-lucide-phone'
-  },
-  {
-    label: 'มีบริการโฮม บิส และคำปรึกษาฟรี',
-    to: '#',
-    icon: 'i-lucide-circle-help'
+    label: 'คู่มือการใช้งาน และคำถามที่พบบ่อย',
+    to: 'https://docs.google.com/document/d/18M2T_NvFYvg4fn-lVixSzkp-24impC8EDtPxJHqOkpU/edit?tab=t.0',
+    icon: 'i-lucide-message-circle-question-mark'
   }
+  // {
+  //   label: 'ติดต่อเจ้าหน้าที่ผ่าน Line OA',
+  //   to: '#',
+  //   icon: 'i-lucide-message-circle-more'
+  // },
+  // {
+  //   label: 'support@nexum.com',
+  //   to: 'mailto:support@nexum.com',
+  //   icon: 'i-lucide-mail'
+  // },
+  // {
+  //   label: '02-123-15789',
+  //   to: 'tel:0212315789',
+  //   icon: 'i-lucide-phone'
+  // },
+  // {
+  //   label: 'มีบริการโฮม บิส และคำปรึกษาฟรี',
+  //   to: '#',
+  //   icon: 'i-lucide-circle-help'
+  // }
 ]
 
 useSeoMeta({
   title: 'Nexum Services',
   description: 'หน้าบริการสำหรับจัดการเงินเดือน เครดิต และศูนย์ช่วยเหลือ'
 })
+
+function openLink(url?: string) {
+  if (!url || url === '#') {
+    return
+  }
+
+  navigateTo(url, { external: true })
+}
 </script>
 
 <style scoped>
