@@ -80,14 +80,9 @@
 </template>
 
 <script setup lang="ts">
-
 const newsStore = useNewsStore()
-
 const config = useRuntimeConfig();
-
 const baseURL = config.public;
-
-
 const mainServices = [
   {
     title: 'จ่ายเงินเดือน',
